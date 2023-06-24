@@ -99,7 +99,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
                 <label className="block text-sm font-medium leading-6 text-gray-900">
                   Photo
                 </label>
-                <div className="empty-2 flex items-center gap-x-3">
+                <div className="mt-2 flex items-center gap-x-3">
                   <Image
                     width={48}
                     height={48}
