@@ -1,4 +1,5 @@
 import getConversations from "../actions/getConversation"
+import getCurrentUser from "../actions/getCurrentUser"
 import getUsers from "../actions/getUsers"
 import Sidebar from "../components/sidebar/Sidebar"
 import ConversationList from "./components/ConversationList"
@@ -11,6 +12,7 @@ export default async function ConversationLayout({
 
   const conversations = await getConversations()
   const users = await getUsers()
+  const currentUser = await getCurrentUser()
 
   return (
     <Sidebar>
@@ -18,6 +20,7 @@ export default async function ConversationLayout({
         <ConversationList
           users={users}
           initialItems={conversations}
+          currentUser={currentUser!}
         />
         {children}
       </div>
