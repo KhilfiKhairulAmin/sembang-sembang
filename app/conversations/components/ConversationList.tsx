@@ -12,19 +12,24 @@ import { User } from "@prisma/client"
 import { useSession } from "next-auth/react"
 import { pusherClient } from "@/app/libs/pusher"
 import { find } from "lodash"
+import SettingsModal from "@/app/components/sidebar/SettingsModal"
+import Avatar from "@/app/components/Avatar"
 
 interface ConversationListProps {
   initialItems: FullConversationType[]
-  users: User[]
+  users: User[],
+  currentUser: User
 }
 
 const ConversationList: React.FC<ConversationListProps> = ({
   initialItems,
-  users
+  users,
+  currentUser
 }) => {
   const session = useSession()
   const [items, setItems] = useState(initialItems)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isSettingModalOpen, setIsSettingModalOpen] = useState(false)
 
   const router = useRouter()
 
@@ -93,6 +98,11 @@ const ConversationList: React.FC<ConversationListProps> = ({
       isOpen={isModalOpen}
       onClose={() => setIsModalOpen(false)}
     />
+    <SettingsModal
+      isOpen={isSettingModalOpen}
+      onClose={() => setIsSettingModalOpen(false)}
+      currentUser={currentUser}
+    />
     <aside
       className={clsx(`
         fixed
@@ -120,11 +130,28 @@ const ConversationList: React.FC<ConversationListProps> = ({
           >
             Messages
           </div>
+          <div 
+            className="
+              lg:hidden
+            "
+          >
+            <div
+              onClick={() => setIsSettingModalOpen(true)}
+              className="
+                cursor-pointer
+                hover:opacity-75
+                transition
+              "
+            >
+              <Avatar user={currentUser} />
+            </div>
+          </div>
           <div
             onClick={() => setIsModalOpen(true)}
             className="
               rounded-full
-              p-2
+              p-4
+              lg:p-2
               text-gray-600
               bg-gray-100
               cursor-pointer
@@ -132,7 +159,9 @@ const ConversationList: React.FC<ConversationListProps> = ({
               transition
             "
           >
-            <MdOutlineGroupAdd size={20} />
+            <MdOutlineGroupAdd
+              size={20}
+            />
           </div>
         </div>
         {items.map((item) => (
