@@ -130,28 +130,24 @@ const ConversationList: React.FC<ConversationListProps> = ({
           >
             Messages
           </div>
-          <div 
+          <div
+            onClick={() => setIsSettingModalOpen(true)}
             className="
               lg:hidden
+              cursor-pointer
+              hover:opacity-75
+              transition
             "
           >
-            <div
-              onClick={() => setIsSettingModalOpen(true)}
-              className="
-                cursor-pointer
-                hover:opacity-75
-                transition
-              "
-            >
-              <Avatar user={currentUser} />
-            </div>
+            <Avatar user={currentUser} />
           </div>
           <div
             onClick={() => setIsModalOpen(true)}
             className="
               rounded-full
-              p-4
+              p-3
               lg:p-2
+              md:p-4
               text-gray-600
               bg-gray-100
               cursor-pointer
